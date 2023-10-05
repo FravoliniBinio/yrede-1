@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/teste', function () {
     return "TESTADO!!!";
 });
@@ -27,5 +28,7 @@ Route::get('/lista-usuarios', function () {
 
     return view('listaUsuarios', compact('usuarios'));
 
-    
 })->name('lista-usuarios');
+
+
+Route::view('/cadastra-usuario','cadastraUsuarios');
