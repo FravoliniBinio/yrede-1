@@ -41,6 +41,14 @@ Route::view('/cadastra-usuario','cadastraUsuarios');
 Route::post('/salva-usuario',
  function(Request $request){
 
+    $request->validate([
+        'usuario' => 'required',
+        'nome' => 'required',
+        'bio' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'senha' => 'required',
+        ]);
+
     $usuario = new User();
     $usuario->usuario =$request->input('usuario');
     $usuario->nome =$request->input('nome');
@@ -49,7 +57,7 @@ Route::post('/salva-usuario',
     $usuario->senha =$request->input('senha');
     $usuario->save();
 
-    return "Salvo com sucesso!";
+    return redirect()->intended('/');
 
 })->name('salva-usuario');
 
@@ -71,9 +79,9 @@ Route::post('/logar', function (Request $request) {
             return redirect()->intended('/');
             
 
-            return "Logado com sucesso";
+            
         }
-        return "Erro ao logar/ Usuário ou senha inválidos";
+        return redirect('/login')->with('mensagem_erro', 'Usuário ou senha inválidos');
 });
 
 Route::middleware(['auth'])->group(function () {
